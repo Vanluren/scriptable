@@ -24,4 +24,37 @@ const getTeamImg = async (id) => {
 
 const createWidget = () => {
   let teamImg = await getTeamImg(teamId)
+  const imageSize =  26;
+
+  let widget = new ListWidget();
+
+  widget.backgroundColor =  new Color("#2C2C2E", 1);
+
+  let infoRowStack = w.addStack();
+  infoRowStack.centerAlignContent();
+  infoRowStack.addSpacer();
+
+  let dateStack = infoRowStack.addStack();
+  const dateFormatter = new DateFormatter();
+  dateFormatter.useMediumDateStyle();
+  dateFormatter.useShortTimeStyle();
+  let parsedDate = new Date(Date.parse(e.strTimestamp));
+  let formattedDate = dateFormatter.string(parsedDate);
+
+  let date = dateStack.addText(formattedDate);
+  date.font = Font.mediumSystemFont(10);
+  date.textOpacity = 0.5;
+
+  dateStack.addSpacer(10);
+
+  widget.addSpacer();
+
+  return widget;
 };
+
+const widget = await createWidget();
+
+Script.setWidget(widget);
+Script.complete();
+
+await widget.presentLarge();
